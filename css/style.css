@@ -1,0 +1,87 @@
+/*
+ * Master stylesheet for Budgetr
+ */
+
+body {
+	font-family: helvetica;
+	font-size: 0.8em;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0 0.2em;
+}
+
+	tr { text-align: left; }
+	
+	td {
+		margin: 0;
+		padding: 0.3em 1em;
+	}
+
+#container {
+    width: 100%;
+    min-width: 700px;
+}
+
+
+.addVar, .removeVar { cursor: pointer; }
+.addVar td, .newItem.first td { padding-top: 1em; }
+
+.catHeader {
+	color: #FFF;
+	background-color: #55D;
+}
+
+.grandTotal {
+	color: #FFF;
+	background-color: #79C;
+}
+
+#categories {
+	position: fixed;
+    margin: 0 1em;
+    width: 10%;
+    left: 80%;
+    top: 0;
+}
+
+	#catList tr:nth-child(2n+1) td { background: #EEE; }
+	
+#budget { width: 80%; }
+    #budget td:last-child { width: 3%; }
+	#budget td.itemName { width: 20%; }
+	#budget td.amount {
+		width: 15%;
+		text-align: right;
+	}
+
+	#budget td input { width: 85%; }
+	#budget td.amount input { width: 5em; }
+
+	.budgetTotal { 	background-color: #EEE; }
+
+	#budget .newItem td .catid {
+		width: 30px;
+		margin-left: 5px;
+	}
+	#budget .newItem .itemName .nameInp {
+		width: 70%;
+		margin-left: 1em;
+	}
+	.remaining {
+	    background-color: #55D;
+	    color: #FFF;
+	}
+
+@media screen and (max-width:850px) {
+
+    #budget { width: 650px; }
+	
+	#categories {
+		position: relative;
+		float; none;
+		left: 0;
+		width; 100%;
+	}
+}
