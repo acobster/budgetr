@@ -13,6 +13,8 @@ table {
 }
 
 	tr { text-align: left; }
+
+	th { cursor: pointer; }
 	
 	td {
 		margin: 0;

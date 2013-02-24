@@ -66,6 +66,8 @@ class Controller {
         
         $items = $this->budget->fetchItems();
 
+        $this->data['items'] = $items;
+
         $categories = $this->categorize( $items );
         
         $this->data['categories'] = $categories;
@@ -173,6 +175,10 @@ class Controller {
             $this->data['debug'][] = $message;
         }
     }
+
+    private function dump( $obj ) {
+        $this->debug( '<pre>' . var_export( $obj, true ) . '</pre>' );
+    }
     
     private function error( $message = '' ) {
         $this->errors[] = $message;
@@ -184,6 +190,31 @@ class Controller {
         $d = $this->data;
         
         require_once 'templates/' . $file . '.php';
+    }
+
+    private function catDropdownList( $cats, $item ) {
+
+        $select = "<select name=\"item[{$item['id']}][catid]\">";
+
+        foreach( $cats as $name => $cat ) {
+
+            if( $cat['catid'] == $item['catid'] ) {
+                $selected = 'selected';
+                $class = 'class="sortField"';
+            } else {
+                $class = $selected = '';
+            }
+            
+            $select .= <<<_HTML_
+                <option value="{$cat['catid']}" $class $selected>
+                    $name
+                </option>
+_HTML_;
+        }
+
+        $select .= '</select>';
+
+        return $select;
     }
 }
 

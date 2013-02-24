@@ -6,9 +6,10 @@
 <meta charset="utf-8" />
 <title>Budgetr</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/tablesorter/style.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.jeditable.js"></script>
 <script type="text/javascript" src="js/jquery.variations.js"></script>
+<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript">
 
 var numNewItems = 0;
@@ -49,15 +50,21 @@ function removeBudgetItem(args) {
 }
 
 $(document).ready(function() {
-    registerVariations( {
-        addCallback: 'addBudgetItem',
-        beforeRemove: 'removeBudgetItem'
-    } );
+
+    registerVariations({});
+
+    $( '#budget' ).tablesorter( { debug: true,
+        textExtraction: function(node) {
+            var val = $(node).children('.sortField').val();
+            return val;
+        }
+    });
     
     $( 'form' ).submit( function() {
 		return confirm( "Are you sure you want to save all changes?" );
     });
 });
+
 </script>
 </head>
 
@@ -78,57 +85,44 @@ $(document).ready(function() {
 <table id="budget" class="variations">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th colspan="2">Amount</th>
+            <th class="budgetHeader">Name</th>
+            <th class="budgetHeader">Description</th>
+            <th class="budgetHeader">Category</th>
+            <th class="budgetHeader" colspan="2">Amount</th>
         </tr>
     </thead>
     
-    <?php foreach( $d['categories'] as $name => $cat ) : ?>
-    <tr class="catHeader">
-        <td colspan="2">
-            <?= $name ?>
-            <input type="hidden" class="catid"
-            value="<?= $cat['catid'] ?>" />
+    <?php foreach( $d['items'] as $item ) : ?>
+    <tr class="variation">
+        <td class="itemName">            
+            <input type="text" class="nameInp sortField"
+            name="item[<?= $item['id'] ?>][name]"
+            value="<?= $item['name'] ?>" />
         </td>
-        <td class="amount" title="total for '<?= $name ?>'">
-                $<?= $this->formatAmt( $cat['subtotal'] ) ?>
+        <td class="description">
+            <input type="text" class="description sortField"
+            name="item[<?= $item['id'] ?>][description]"
+            value="<?= $item['description'] ?>" />
         </td>
-        <td></td>
+        <td class="category">
+            <?= $this->catDropdownList( $d['categories'], $item ) ?>
+        </td>
+        <td class="amount">
+            $ <input type="text" class="sortField"
+            name="item[<?= $item['id'] ?>][amount]"
+            value="<?= $this->formatAmt( $item['amount'] ) ?>" />
+        </td>
+        <td class="removeVar" title="Remove this budget item">
+            <img src="images/remove.png" />
+            
+            <input type="hidden" name="itemid[]"
+            value="<?= $item['id'] ?>" />
+        </td>
     </tr>
-    
-        <?php foreach( $cat['items'] as $item ) : ?>
-        <tr class="variation">
-            <td class="itemName">
-                <input type="hidden" class="catid"
-                name="item[<?= $item['id'] ?>][catid]"
-                value="<?= $item['catid'] ?>" />
-                
-                <input type="text" class="nameInp"
-                name="item[<?= $item['id'] ?>][name]"
-                value="<?= $item['name'] ?>" />
-            </td>
-            <td class="description">
-                <input type="text" class="description"
-                name="item[<?= $item['id'] ?>][description]"
-                value="<?= $item['description'] ?>" />
-            </td>
-            <td class="amount">
-                $ <input type="text"
-                name="item[<?= $item['id'] ?>][amount]"
-                value="<?= $this->formatAmt( $item['amount'] ) ?>" />
-            </td>
-            <td class="removeVar" title="Remove this budget item">
-                <img src="images/remove.png" />
-                
-                <input type="hidden" name="itemid[]"
-                value="<?= $item['id'] ?>" />
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    
     <?php endforeach; ?>
         
+    <tfoot>
+    
     <tr class="addVar" >
         <td colspan="4">
             <span title="Add a budget item">
@@ -137,8 +131,6 @@ $(document).ready(function() {
             </span>
         </td>
     </tr>
-        
-    <tfoot>
     <tr class="budgetTotal amount" title="Budget total">
         <td colspan="2">Starting budget:</td>
         <td>$<?= $this->formatAmt( $d['starting'] ) ?></td>
@@ -164,19 +156,24 @@ $(document).ready(function() {
 
 
 <div id="categories">
-	<h2>Categories</h2>
+	<h2>Subotals</h2>
     <p><a href="./?view=categories">Edit Categories</a></p>
     <table>
     	<tbody id="catList">
     	
-    	<tr><th>Id</th><th>Name</th></tr>
+    	<tr><th>Category</th><th>Total</th></tr>
     
-    	<?php foreach( $d['categories'] as $cat ) : ?>
-    	    <tr title="<?= $cat['description'] ?>">
-                <td><?= $cat['catid'] ?></td>
-                <td><?= $cat['name'] ?></td>
-    	    </tr>
-    	<?php endforeach; ?>
+        <?php foreach( $d['categories'] as $name => $cat ) : ?>
+        <tr>
+            <td colspan="2">
+                <?= $name ?>
+            </td>
+            <td title="total for '<?= $name ?>'">
+                    $<?= $this->formatAmt( $cat['subtotal'] ) ?>
+            </td>
+            <td></td>
+        </tr>
+        <?php endforeach; ?>
 
     	</tbody>
     </table>

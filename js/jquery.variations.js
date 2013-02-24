@@ -34,6 +34,7 @@ function registerVariations( args ) {
 
     // add new variation
     $( parent+' '+addSelector ).click( function() {
+        alert('add');
 
         var varParent = $(this).parents( parent );
 

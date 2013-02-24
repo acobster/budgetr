@@ -29,7 +29,8 @@ class Item extends Model {
         $sql = "UPDATE items SET name = '{$row['name']}',"
             . " description = '{$row['description']}',"
             . " budget = {$row['budget']},"
-            . " amount = $amount"
+            . " amount = $amount,"
+            . " category = {$row['catid']}"
             . " WHERE id = $id";
 
         DB::singleton()->run( $sql );
@@ -46,7 +47,7 @@ class Item extends Model {
             . " budget = {$row['budget']},"
             . " amount = $amount,"
             . " category = {$row['catid']}";
-            
+
         DB::singleton()->run( $sql );
     }
     
