@@ -14,7 +14,10 @@ table {
 
 	tr { text-align: left; }
 
-	th { cursor: pointer; }
+	th {
+		text-align: center;
+		cursor: pointer;
+	}
 	
 	td {
 		margin: 0;
@@ -23,7 +26,7 @@ table {
 
 #container {
     width: 100%;
-    min-width: 700px;
+    min-width: 1100px;
 }
 
 
@@ -40,25 +43,32 @@ table {
 	background-color: #79C;
 }
 
-#categories {
+aside {
 	position: fixed;
     margin: 0 1em;
-    width: 10%;
+    width: 15%;
     left: 80%;
     top: 0;
 }
+	aside div {
+		margin: 2em 0;
+	}
 
 	#catList tr:nth-child(2n+1) td { background: #EEE; }
 	
 #budget { width: 80%; }
+
     #budget td:last-child { width: 3%; }
 	#budget td.itemName { width: 20%; }
-	#budget td.amount {
-		width: 15%;
-		text-align: right;
-	}
 
 	#budget td input { width: 85%; }
+
+	.category { width: 15%; }
+	.day { width: 5%; }
+	.amount {
+		width: 12%;
+		text-align: right;
+	}
 	#budget td.amount input { width: 5em; }
 
 	.budgetTotal { 	background-color: #EEE; }
@@ -76,14 +86,18 @@ table {
 	    color: #FFF;
 	}
 
-@media screen and (max-width:850px) {
+.instruct {
+	color: #888;
+}
 
-    #budget { width: 650px; }
+@media screen and (max-width:1150px) {
+
+    #container { width: 1100px; }
 	
-	#categories {
+	aside {
 		position: relative;
 		float; none;
 		left: 0;
-		width; 100%;
+		width: 100%;
 	}
 }

@@ -16,20 +16,48 @@ class Budget extends Model {
         $this->DB = DB::singleton();
     }
     
-    public function fetchItems() {
+    public function fetchMonthlyItems( $month ) {
 
         $sql = "SELECT IF( i.id IS NULL, 'null', i.id ) id,"
-            . " i.name, i.description, i.amount,"
-        	. " c.id catid, c.name category, c.description catdesc,"
-        	. " b.name budget, b.total"
-        	. " FROM items i JOIN categories c ON i.category = c.id"
-        	. " JOIN budget b ON c.budget = b.id"
-            . " WHERE c.budget = {$this->id}";
+            . " i.name, i.description, i.amount, i.day,"
+            . " c.id catid, c.name category, c.description catdesc,"
+            . " b.name budget, b.total"
+            . " FROM items i JOIN categories c ON i.category = c.id"
+            . " JOIN budget b ON i.budget = b.id"
+            . " WHERE i.budget = {$this->id} AND i.month IN( 0, $month )"
+            . " ORDER BY day";
         
         $result = $this->DB->run( $sql );
         
         $this->name = $result[0]['budget'];
         
+        return $result;
+    }
+    
+    public function fetchAnnualItems() {
+
+        $sql = "SELECT IF( i.id IS NULL, 'null', i.id ) id,"
+            . " i.name, i.description, i.amount, i.day,"
+            . " c.id catid, c.name category, c.description catdesc,"
+            . " b.name budget, b.total"
+            . " FROM items i JOIN categories c ON i.category = c.id"
+            . " JOIN budget b ON i.budget = b.id"
+            . " WHERE i.budget = {$this->id} AND i.month != 0"
+            . " ORDER BY day";
+
+        $result = $this->DB->run( $sql );
+        
+        $this->name = $result[0]['budget'];
+        
+        return $result;
+    }
+
+    public function fetchCategories() {
+
+        $sql = "SELECT * FROM categories";
+
+        $result = $this->DB->run( $sql );
+
         return $result;
     }
     

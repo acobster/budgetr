@@ -60,7 +60,7 @@ $(document).ready(function() {
     
     <form action="index.php" method="POST">
     
-    <p><?= $d['message'] ?></p>
+    <p><?= $message ?></p>
     
     <a href="./?view=budget">Edit Budget</a>
     
@@ -73,7 +73,7 @@ $(document).ready(function() {
     	
     	<tr><th>Id</th><th>Name</th><th>Description</th></tr>
     	
-    	<?php foreach( $d['categories'] as $cat ) : ?>
+    	<?php foreach( $categories as $cat ) : ?>
     	    <tr class="variation">
                 <td class="catid"><?= $cat['id'] ?></td>
                 <td>
@@ -115,7 +115,7 @@ $(document).ready(function() {
 
 </div><!-- /container -->
 
-<?php if($d['debug']) : foreach( $d['debug'] as $debug ) : ?>
+<?php if($debug) : foreach( $debug as $debug ) : ?>
     <pre><?= $debug ?></pre>
 <?php endforeach; endif; ?>
 

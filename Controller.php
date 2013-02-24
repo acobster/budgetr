@@ -21,8 +21,8 @@ class Controller {
     
     function execute() {
         
-        if( isset( $_GET['budget'] ) ) {
-            $id = $_GET['budget'];
+        if( isset( $_GET['id'] ) ) {
+            $id = $_GET['id'];
             if( ! filter_var( $id, FILTER_VALIDATE_INT ) ) {
                 throw new RuntimeException( "Invalid budget id: $id" );
             }
@@ -64,25 +64,66 @@ class Controller {
             }
         }
         
-        $items = $this->budget->fetchItems();
-
-        $this->data['items'] = $items;
-
-        $categories = $this->categorize( $items );
-        
-        $this->data['categories'] = $categories;
-        
-        $this->data['starting'] = $items[0]['total'];
-        $this->data['total'] = $this->calculateTotal( $items );
-        $this->data['remaining'] =
-            $this->data['starting'] - $this->data['total'];
-        
-        $this->data['budgetName'] = ucwords( $this->budget->name );
         if( empty( $this->data['message'] ) ) {
             $this->data['message'] = '';
         }
 
+        $budget = isset( $_GET['budget'] )
+            ? $_GET['budget']
+            : 'monthly';
+
+        switch( $budget ) {
+
+            case 'monthly' :
+                $this->data['content'] = $this->displayMonthly();
+                break;
+
+            case 'annual' :
+                $this->data['content'] = $this->displayAnnual();
+                break;
+
+            default :
+                $this->data['content'] = $this->displayMonthly();
+        }
+
         $this->parseTemplate( 'budget' );
+    }
+
+    protected function displayMonthly()
+    {
+        $month = isset( $_GET['month'] )
+            ? $_GET['month']
+            : date('n');
+
+        $items = $this->budget->fetchMonthlyItems( $month );
+        $this->data['month'] = $month;
+
+        $this->data['items'] = $items;
+        $this->data['categories'] = $this->categorize( $items );
+        $this->data['summary'] = $this->summarize( $items );
+
+        $this->data['starting'] = $items[0]['total'];
+        $this->data['total'] = $this->calculateTotal( $items );
+        $this->data['remaining'] =
+            $this->data['starting'] - $this->data['total'];
+
+        return $this->parseTemplate( 'monthly', true );
+    }
+
+    protected function displayAnnual()
+    {
+        $this->debug('annual');
+        $items = $this->budget->fetchAnnualItems();
+
+        $this->data['items'] = $items;
+        $this->data['categories'] = $this->categorize( $items );
+
+        $this->data['starting'] = $items[0]['total'];
+        $this->data['total'] = $this->calculateTotal( $items );
+        $this->data['remaining'] =
+            $this->data['starting'] - $this->data['total'];
+
+        return $this->parseTemplate( 'annual', true );
     }
     
     protected function displayCategories() {
@@ -161,9 +202,16 @@ class Controller {
         }
         return $categories;
     }
-    
-    protected function formatAmt( $amt ) {
-        return number_format( $amt/100, 2 );
+
+    private function summarize( array $items ) {
+        $parts = array( 0 => 0, 1 => 0 );
+        foreach( $items as $item ) {
+            $i = ( $item <= 5 or $item['day'] >= 19 )
+                ? 0
+                : 1;
+            $parts[$i] += $item['amount'];
+        }
+        return $parts;
     }
     
     
@@ -184,12 +232,23 @@ class Controller {
         $this->errors[] = $message;
     }
     
-    private function parseTemplate( $file ) {
+    private function parseTemplate( $template, $return = false ) {
+
+        foreach( $this->data as $k => $v ) {
+            $$k = $v;
+        }
         
-        global $d;
-        $d = $this->data;
-        
-        require_once 'templates/' . $file . '.php';
+        if( $return ) {
+            ob_start();
+            require 'templates/' . $template . '.php';   
+            return ob_get_clean();
+        } else {
+            require 'templates/' . $template . '.php';   
+        }
+    }
+    
+    protected function formatAmt( $amt ) {
+        return number_format( $amt/100, 2 );
     }
 
     private function catDropdownList( $cats, $item ) {
@@ -208,6 +267,30 @@ class Controller {
             $select .= <<<_HTML_
                 <option value="{$cat['catid']}" $class $selected>
                     $name
+                </option>
+_HTML_;
+        }
+
+        $select .= '</select>';
+
+        return $select;
+    }
+
+    private function dayDropdownList( $item ) {
+
+        $select = "<select name=\"item[{$item['id']}][day]\">";
+
+        foreach( range( 1, 31 ) as $day ) {
+
+            if( $day == $item['day'] ) {
+                $selected = 'selected';
+            } else {
+                $class = $selected = '';
+            }
+            
+            $select .= <<<_HTML_
+                <option value="{$cat['day']}" $selected>
+                    $day
                 </option>
 _HTML_;
         }

@@ -30,7 +30,8 @@ class Item extends Model {
             . " description = '{$row['description']}',"
             . " budget = {$row['budget']},"
             . " amount = $amount,"
-            . " category = {$row['catid']}"
+            . " category = {$row['catid']},"
+            . " day = {$row['day']}"
             . " WHERE id = $id";
 
         DB::singleton()->run( $sql );
@@ -46,7 +47,8 @@ class Item extends Model {
             . " description = '{$row['description']}',"
             . " budget = {$row['budget']},"
             . " amount = $amount,"
-            . " category = {$row['catid']}";
+            . " category = {$row['catid']},"
+            . " day = {$row['day']}";
 
         DB::singleton()->run( $sql );
     }
@@ -63,7 +65,7 @@ class Item extends Model {
         
         $ids = implode( ',', $ids );
         $sql = "DELETE FROM items WHERE id IN( $ids )";
-
+echo $sql;
         DB::singleton()->run( $sql );
     }
     
