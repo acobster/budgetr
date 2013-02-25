@@ -11,7 +11,7 @@ class Controller {
     
     function Controller( $view ) {
         $this->view = $view;
-        $this->errors = array();
+        $this->error = false;
         $this->data = array();
         
         if( $this->DEBUG ) {
@@ -49,17 +49,17 @@ class Controller {
         if( isset( $_POST['action'] ) && $_POST['action'] == 'save' ) {
             try {
                 $this->budget->save( $_POST['item'] );
-                $this->data['message'] = "Saved successfully";
+                $this->message( 'Saved successfully' );
             } catch( RuntimeException $e ) {
-                $this->data['message'] = $e->getMessage();
+                $this->error( $e->getMessage() );
             }
         
             if( $_POST['remove'] ) {
                 try {
                     $this->budget->removeItems( $_POST['remove'] );
-                    $this->data['message'] = "Saved successfully";
+                    $this->message( 'Saved successfully' );
                 } catch( RuntimeException $e ) {
-                    $this->data['message'] = 'remove';
+                    $this->error( $e->getMessage() );
                 }
             }
         }
@@ -74,14 +74,11 @@ class Controller {
 
         switch( $budget ) {
 
-            case 'monthly' :
-                $this->data['content'] = $this->displayMonthly();
-                break;
-
             case 'annual' :
                 $this->data['content'] = $this->displayAnnual();
                 break;
 
+            case 'monthly' :
             default :
                 $this->data['content'] = $this->displayMonthly();
         }
@@ -112,7 +109,6 @@ class Controller {
 
     protected function displayAnnual()
     {
-        $this->debug('annual');
         $items = $this->budget->fetchAnnualItems();
 
         $this->data['items'] = $items;
@@ -229,7 +225,12 @@ class Controller {
     }
     
     private function error( $message = '' ) {
-        $this->errors[] = $message;
+        $this->error = true;
+        $this->message( $message );
+    }
+    
+    private function message( $message = '' ) {
+        $this->data['message'] = $message;
     }
     
     private function parseTemplate( $template, $return = false ) {

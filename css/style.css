@@ -29,6 +29,12 @@ table {
     min-width: 1100px;
 }
 
+.message {
+	color: #080;
+	font-weight: bold;
+}
+.error { color: #C00; }
+
 
 .addVar, .removeVar { cursor: pointer; }
 .addVar td, .newItem.first td { padding-top: 1em; }
@@ -54,7 +60,7 @@ aside {
 		margin: 2em 0;
 	}
 
-	#catList tr:nth-child(2n+1) td { background: #EEE; }
+	.list tr:nth-child(2n+1) td { background: #EEE; }
 	
 #budget { width: 80%; }
 
@@ -64,7 +70,7 @@ aside {
 	#budget td input { width: 85%; }
 
 	.category { width: 15%; }
-	.day { width: 5%; }
+	.month, .day { width: 5%; }
 	.amount {
 		width: 12%;
 		text-align: right;
@@ -73,14 +79,6 @@ aside {
 
 	.budgetTotal { 	background-color: #EEE; }
 
-	#budget .newItem td .catid {
-		width: 30px;
-		margin-left: 5px;
-	}
-	#budget .newItem .itemName .nameInp {
-		width: 70%;
-		margin-left: 1em;
-	}
 	.remaining {
 	    background-color: #55D;
 	    color: #FFF;

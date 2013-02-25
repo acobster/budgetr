@@ -15,10 +15,13 @@
 var numNewItems = 0;
 
 function addBudgetItem(args) {
+
+    var theMonth = $('input[name="theMonth"]').val();
+
     with( $(args.variation) ) {
 
         // rename item inputs so the server knows they're new
-        find('input').each( function() {
+        find('input, select').each( function() {
             with( $(this) ) {
                 var name = prop( 'name' )
                 	.replace( /item\[(new|null|\d*)\](\[\d+\])*/,
@@ -26,7 +29,9 @@ function addBudgetItem(args) {
                 prop( 'name', name );
             }
         });
-        
+
+        find('.itemMonth').val( theMonth );
+
 		if( numNewItems == 0 ) {
 			addClass( 'first' );
 		} else {

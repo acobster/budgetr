@@ -2,11 +2,11 @@
 
 <form action="./?budget=annual" method="POST">
 
-<p><?= $message ?></p>
+<p class="message <?= ($this->error) ? 'error' : '' ?>">
+    <?= $message ?>
+</p>
 
 <p><button type="submit" name="action" value="save">Save</button></p>
-
-<input type="hidden" name="view" value="budget" />
 
 <table id="budget" class="variations">
     <thead>
@@ -14,8 +14,10 @@
             <th class="budgetHeader">Name</th>
             <th class="budgetHeader">Description</th>
             <th class="budgetHeader">Category</th>
+            <th class="budgetHeader">Month</th>
             <th class="budgetHeader">Day</th>
-            <th class="budgetHeader" colspan="2">Amount</th>
+            <th class="budgetHeader">Amount</th>
+            <th></th>
         </tr>
     </thead>
 
@@ -34,9 +36,14 @@
         <td class="category">
             <?= $this->catDropdownList( $categories, $item ) ?>
         </td>
-        <td class="day">
+        <td class="month">
             <input type="text" class="sortField"
             name="item[new][0][day]"
+            value="" />
+        </td>
+        <td class="day">
+            <input type="text" class="sortField"
+            name="item[new][0][month]"
             value="" />
         </td>
         <td class="amount">
@@ -66,6 +73,11 @@
         <td class="category">
             <?= $this->catDropdownList( $categories, $item ) ?>
         </td>
+        <td class="month">
+            <input type="text" class="sortField"
+            name="item[<?= $id ?>][0][month]"
+            value="<?= $item['month'] ?>" />
+        </td>
         <td class="day">
             <input type="text" class="sortField"
             name="item[<?= $id ?>][day]"
@@ -83,7 +95,7 @@
         </td>
     </tr>
     <?php endforeach; ?>
-<?php endif; ?>
+    <?php endif; ?>
         
     <tfoot>
     <tr class="addVar" >

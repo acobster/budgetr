@@ -19,7 +19,7 @@ class Budget extends Model {
     public function fetchMonthlyItems( $month ) {
 
         $sql = "SELECT IF( i.id IS NULL, 'null', i.id ) id,"
-            . " i.name, i.description, i.amount, i.day,"
+            . " i.name, i.description, i.amount, i.month, i.day,"
             . " c.id catid, c.name category, c.description catdesc,"
             . " b.name budget, b.total"
             . " FROM items i JOIN categories c ON i.category = c.id"
@@ -37,13 +37,13 @@ class Budget extends Model {
     public function fetchAnnualItems() {
 
         $sql = "SELECT IF( i.id IS NULL, 'null', i.id ) id,"
-            . " i.name, i.description, i.amount, i.day,"
+            . " i.name, i.description, i.amount, i.month, i.day,"
             . " c.id catid, c.name category, c.description catdesc,"
             . " b.name budget, b.total"
             . " FROM items i JOIN categories c ON i.category = c.id"
             . " JOIN budget b ON i.budget = b.id"
             . " WHERE i.budget = {$this->id} AND i.month != 0"
-            . " ORDER BY day";
+            . " ORDER BY month, day";
 
         $result = $this->DB->run( $sql );
         

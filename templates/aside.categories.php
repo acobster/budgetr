@@ -1,8 +1,8 @@
 <div id="categories">
     <h2>Categories</h2>
     <p><a href="./?view=categories">Edit Categories</a></p>
-    <table>
-        <tbody id="catList">
+    <table class="list">
+        <tbody>
         
         <tr><th>Category</th><th>Total</th></tr>
     

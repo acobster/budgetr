@@ -13,7 +13,7 @@ class Item extends Model {
     protected static $DB;
     
     protected static $validation = array(
-        'name' => '/^[\w ]+$/',
+        'name' => '/^[\w.,\- ]+$/',
         'description' => '/^[\w\.,\- ]+$/',
         'amount' => '/^\d+(\.\d\d)?$/',
         'catid' => '/^\d+$/',
@@ -48,6 +48,7 @@ class Item extends Model {
             . " budget = {$row['budget']},"
             . " amount = $amount,"
             . " category = {$row['catid']},"
+            . " month = {$row['month']},"
             . " day = {$row['day']}";
 
         DB::singleton()->run( $sql );
@@ -65,7 +66,7 @@ class Item extends Model {
         
         $ids = implode( ',', $ids );
         $sql = "DELETE FROM items WHERE id IN( $ids )";
-echo $sql;
+
         DB::singleton()->run( $sql );
     }
     
