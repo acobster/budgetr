@@ -95,11 +95,12 @@ class Controller {
         $items = $this->budget->fetchMonthlyItems( $month );
         $this->data['month'] = $month;
 
+        $this->data['starting'] = $items[0]['total'];
+
         $this->data['items'] = $items;
         $this->data['categories'] = $this->categorize( $items );
         $this->data['summary'] = $this->summarize( $items );
 
-        $this->data['starting'] = $items[0]['total'];
         $this->data['total'] = $this->calculateTotal( $items );
         $this->data['remaining'] =
             $this->data['starting'] - $this->data['total'];
@@ -200,13 +201,22 @@ class Controller {
     }
 
     private function summarize( array $items ) {
+
         $parts = array( 0 => 0, 1 => 0 );
+        
         foreach( $items as $item ) {
-            $i = ( $item <= 5 or $item['day'] >= 19 )
-                ? 0
-                : 1;
+            $i = ( $item['day'] < 5 or $item['day'] >= 19 )
+                ? 1
+                : 0;
             $parts[$i] += $item['amount'];
         }
+
+        $today = date('j');
+        $i = ( $today < 5 or $today >= 19 )
+            ? 1
+            : 0; 
+        $parts['left'] = $this->data['starting']/2 - $parts[$i];
+
         return $parts;
     }
     

@@ -1,6 +1,6 @@
 <?php $theDate = DateTime::createFromFormat( 'n', $month ); ?>
 
-<h2>Monthly budget for <?= $theDate->format( 'F Y' ) ?></h2>
+<h2>Monthly budget for <?= $theDate->format( 'F' ) ?></h2>
 
 <form action="./?month=<?= $theDate->format('n') ?>" method="POST">
 
@@ -8,7 +8,10 @@
     <?= $message ?>
 </p>
 
-<p><button type="submit" name="action" value="save">Save</button></p>
+<p>
+    <button type="submit" name="action" value="save">Save</button>
+    <button type="button" class="refresh">Refresh</button>
+</p>
 
 <input type="hidden" name="theMonth" value="<?= $theDate->format('n') ?>" />
 
@@ -124,7 +127,10 @@
 
 </table>
 
-<p><button type="submit" name="action" value="save">Save</button></p>
+<p>
+    <button type="submit" name="action" value="save">Save</button>
+    <button type="button" class="refresh">Refresh</button>
+</p>
 
 </form>
 
@@ -155,23 +161,28 @@
 
 <div id="summary">
     <h2>Summary</h2>
-    <p class="instruct">Only items in
+    <p>
+        <strong>$<?= $this->formatAmt( $summary['left'] ) ?></strong>
+        until next paycheck
+    </p>
+    <hr />
+    <p class="instruct">Only items for this
         <?= $theDate->format('F') ?> are reflected.</p>
-    <table>
+    <table class="list">
         <tbody>
         
         <tr><th>Day range</th><th>Total</th></tr>
     
         <tr>
-            <td><?= date('M') ?> 0-19</td>
+            <td><?= date('M') ?> 5 - 19</td>
             <td class="amount" title="total for '<?= $name ?>'">
                     $<?= $this->formatAmt( $summary[0] ) ?>
             </td>
         </tr>
         <tr>
-            <td><?= date('M') ?> 20-31ish</td>
+            <td><?= date('M') ?> 1 - 5, 19 - 28</td>
             <td class="amount" title="total for '<?= $name ?>'">
-                    $<?= $this->formatAmt( $summary[0] ) ?>
+                    $<?= $this->formatAmt( $summary[1] ) ?>
             </td>
         </tr>
 

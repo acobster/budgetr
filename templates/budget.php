@@ -64,6 +64,11 @@ $(document).ready(function() {
             return val;
         }
     });
+
+    $('.refresh').click( function() {
+        // don't submit any form data, just reload the URL
+        window.location.href = window.location.href;
+    });
     
     $( 'form' ).submit( function() {
 		return confirm( "Are you sure you want to save all changes?" );
