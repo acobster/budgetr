@@ -161,7 +161,7 @@
 
 <div id="summary">
     <h2>Summary</h2>
-    <p>
+    <p class="remaining">
         <strong>$<?= $this->formatAmt( $summary['left'] ) ?></strong>
         until next paycheck
     </p>

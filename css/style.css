@@ -59,6 +59,9 @@ aside {
 	aside div {
 		margin: 2em 0;
 	}
+	aside .remaining {
+		padding: 0.2em;
+	}
 
 	.list tr:nth-child(2n+1) td { background: #EEE; }
 	
