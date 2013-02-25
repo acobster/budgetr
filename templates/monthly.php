@@ -165,9 +165,6 @@
         <strong>$<?= $this->formatAmt( $summary['left'] ) ?></strong>
         until next paycheck
     </p>
-    <hr />
-    <p class="instruct">Only items for this
-        <?= $theDate->format('F') ?> are reflected.</p>
     <table class="list">
         <tbody>
         
@@ -188,6 +185,8 @@
 
         </tbody>
     </table>
+    <p class="instruct">Only items for this
+        <?= $theDate->format('F') ?> are reflected.</p>
 </div>
 
 </aside>
