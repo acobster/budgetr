@@ -1,4 +1,0 @@
-order deny,allow
-deny from all
-allow from 127.0.0.1
-allow from 131.191.82.149 # iMac

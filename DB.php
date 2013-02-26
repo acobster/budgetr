@@ -16,7 +16,7 @@ class DB {
     protected function __construct() {
         $this->connection = mysql_connect( 
         	'localhost', 
-        	'coby', 
+        	'fangchia_budgetr', 
         	'uL2YcVJPseU5XBBC');
         
         mysql_select_db('fangchia_budgetr');
