@@ -19,7 +19,7 @@ class DB {
         	'coby', 
         	'uL2YcVJPseU5XBBC');
         
-        mysql_select_db('budget');
+        mysql_select_db('fangchia_budgetr');
     }
     
     function run( $sql ) {
