@@ -16,8 +16,6 @@ var numNewItems = 0;
 
 function addBudgetItem(args) {
 
-    var theMonth = $('input[name="theMonth"]').val();
-
     with( $(args.variation) ) {
 
         // rename item inputs so the server knows they're new
@@ -30,7 +28,7 @@ function addBudgetItem(args) {
             }
         });
 
-        find('.itemMonth').val( theMonth );
+        find('.itemMonth').val( 0 );
 
 		if( numNewItems == 0 ) {
 			addClass( 'first' );

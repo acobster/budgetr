@@ -31,6 +31,7 @@ class Item extends Model {
             . " budget = {$row['budget']},"
             . " amount = $amount,"
             . " category = {$row['catid']},"
+            . " month = {$row['month']},"
             . " day = {$row['day']}"
             . " WHERE id = $id";
 

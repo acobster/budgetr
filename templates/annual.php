@@ -75,7 +75,7 @@
         </td>
         <td class="month">
             <input type="text" class="sortField"
-            name="item[<?= $id ?>][0][month]"
+            name="item[<?= $id ?>][month]"
             value="<?= $item['month'] ?>" />
         </td>
         <td class="day">
