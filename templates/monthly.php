@@ -161,10 +161,6 @@
 
 <div id="summary">
     <h2>Summary</h2>
-    <p class="remaining">
-        <strong>$<?= $this->formatAmt( $summary['left'] ) ?></strong>
-        until next paycheck
-    </p>
     <table class="list">
         <tbody>
         
@@ -185,6 +181,9 @@
 
         </tbody>
     </table>
+    <p class="remaining">
+        $<?= $this->formatAmt( $summary['left'] ) ?> spending this period
+    </p>
     <p class="instruct">Only items for this
         <?= $theDate->format('F') ?> are reflected.</p>
 </div>
