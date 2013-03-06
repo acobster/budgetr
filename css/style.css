@@ -50,9 +50,9 @@ table {
 }
 
 aside {
-	position: fixed;
+    position: fixed;
     margin: 0 1em;
-    width: 15%;
+    width: 200px;
     left: 80%;
     top: 0;
 }
@@ -99,6 +99,5 @@ aside {
 		position: relative;
 		float; none;
 		left: 0;
-		width: 100%;
 	}
 }

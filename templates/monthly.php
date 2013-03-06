@@ -168,13 +168,13 @@
     
         <tr>
             <td><?= date('M') ?> 5 - 19</td>
-            <td class="amount" title="total for '<?= $name ?>'">
+            <td class="amount"> 
                     $<?= $this->formatAmt( $summary[0] ) ?>
             </td>
         </tr>
         <tr>
             <td><?= date('M') ?> 1 - 5, 19 - 28</td>
-            <td class="amount" title="total for '<?= $name ?>'">
+            <td class="amount"> 
                     $<?= $this->formatAmt( $summary[1] ) ?>
             </td>
         </tr>
