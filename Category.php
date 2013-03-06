@@ -7,14 +7,9 @@ class Category extends Model {
         'description' => '/^[\w\., ]+$/',
     );
     
-    public static function fetch( $budget ) {
-
-        if( ! filter_var( $budget, FILTER_VALIDATE_INT ) )
-        {
-            throw new RuntimeException("Invalid budget id: $budget" );
-        }
+    public static function fetch() {
         
-        $sql = "SELECT * FROM categories WHERE budget = $budget";
+        $sql = "SELECT * FROM categories";
         return DB::singleton()->run( $sql );
     }
 
@@ -29,17 +24,12 @@ class Category extends Model {
         DB::singleton()->run( $sql );
     }
     
-    public static function create( $row, $budget ) {
-    
-        if( ! filter_var( $budget, FILTER_VALIDATE_INT ) )
-        {
-            throw new RuntimeException("Invalid budget id: $budget" );
-        }
+    public static function create( $row ) {
+        
         self::validate( $row );
         
         $sql = "INSERT INTO categories SET name = '{$row['name']}',"
-            . " description = '{$row['description']}',"
-            . " budget = $budget";
+            . " description = '{$row['description']}'";
         
         DB::singleton()->run( $sql );
     }

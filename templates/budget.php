@@ -61,6 +61,9 @@ $(document).ready(function() {
     $( '#budget' ).tablesorter( { debug: true,
         textExtraction: function(node) {
             var val = $(node).children('.sortField').val();
+            if( ! val ) {
+                val = $(node).children('.sortField option:selected').html();
+            }
             return val;
         }
     });

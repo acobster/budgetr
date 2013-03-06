@@ -152,7 +152,7 @@ class Controller {
             }
         }
         
-        $this->data['categories'] = Category::fetch( $this->budget->id );
+        $this->data['categories'] = Category::fetch();
         $this->parseTemplate( 'categories' );
     }
     
@@ -264,19 +264,19 @@ class Controller {
 
     private function catDropdownList( $cats, $item ) {
 
-        $select = "<select name=\"item[{$item['id']}][catid]\">";
+        $select = "<select class=\"sortField\"
+        name=\"item[{$item['id']}][catid]\">";
 
         foreach( $cats as $name => $cat ) {
 
             if( $cat['catid'] == $item['catid'] ) {
                 $selected = 'selected';
-                $class = 'class="sortField"';
             } else {
-                $class = $selected = '';
+                $selected = '';
             }
             
             $select .= <<<_HTML_
-                <option value="{$cat['catid']}" $class $selected>
+                <option value="{$cat['catid']}" $selected>
                     $name
                 </option>
 _HTML_;
@@ -289,14 +289,15 @@ _HTML_;
 
     private function dayDropdownList( $item ) {
 
-        $select = "<select name=\"item[{$item['id']}][day]\">";
+        $select = "<select class=\"sortField\"
+        name=\"item[{$item['id']}][day]\">";
 
         foreach( range( 1, 31 ) as $day ) {
 
             if( $day == $item['day'] ) {
                 $selected = 'selected';
             } else {
-                $class = $selected = '';
+                $selected = '';
             }
             
             $select .= <<<_HTML_
