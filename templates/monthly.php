@@ -2,7 +2,7 @@
 
 <h2>Monthly budget for <?= $theDate->format( 'F' ) ?></h2>
 
-TEST TEST
+TEST TEST TEST
 
 <form action="./?month=<?= $theDate->format('n') ?>" method="POST">
 
