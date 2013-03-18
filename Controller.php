@@ -202,22 +202,31 @@ class Controller {
 
     private function summarize( array $items ) {
 
-        $summary = array( 0 => 0, 1 => 0 );
-        
-        foreach( $items as $item ) {
-            $i = ( $item['day'] < 5 or $item['day'] >= 19 )
-                ? 1
-                : 0;
-            $summary[$i] += $item['amount'];
-        }
-
+        $summary = array( 0 => 0, 1 => 0 );        
         $today = date('j');
-        $i = ( $today < 5 or $today >= 19 )
+
+        // The current pay period
+        $thisPeriod = ( $today < 5 or $today >= 19 )
             ? 1
             : 0;
 
-        $summary['expenses'] = $summary[$i];
-        $summary['left'] = $this->data['starting']/2 - $summary[$i];
+        $summary['expenses'] = 0;
+
+        foreach( $items as $item ) {
+            // Sum up expenses for each pay period this month
+            $period = ( $item['day'] < 5 or $item['day'] >= 19 )
+                ? 1
+                : 0;
+            $summary[$period] += $item['amount'];
+
+            if( $period == $thisPeriod and $item['day'] >= $today )
+            {
+                // Sum up remaining expenses for this period
+                $summary['expenses'] += $item['amount'];
+            }
+        }
+
+        $summary['left'] = $this->data['starting']/2 - $summary[$thisPeriod];
 
         return $summary;
     }
