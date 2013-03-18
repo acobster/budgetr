@@ -178,12 +178,17 @@
                     $<?= $this->formatAmt( $summary[1] ) ?>
             </td>
         </tr>
+        <tr>
+            <td>Expenses:</td>
+            <td>$<?= $this->formatAmt( $summary['expenses'] ) ?></td>
+        </tr>
+        <tr class="remaining">
+            <td>Remaining:</td>
+            <td>$<?= $this->formatAmt( $summary['left'] ) ?></td>
+        </tr>
 
         </tbody>
     </table>
-    <p class="remaining">
-        $<?= $this->formatAmt( $summary['left'] ) ?> spending this period
-    </p>
     <p class="instruct">Only items for this
         <?= $theDate->format('F') ?> are reflected.</p>
 </div>

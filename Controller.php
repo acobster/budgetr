@@ -202,22 +202,24 @@ class Controller {
 
     private function summarize( array $items ) {
 
-        $parts = array( 0 => 0, 1 => 0 );
+        $summary = array( 0 => 0, 1 => 0 );
         
         foreach( $items as $item ) {
             $i = ( $item['day'] < 5 or $item['day'] >= 19 )
                 ? 1
                 : 0;
-            $parts[$i] += $item['amount'];
+            $summary[$i] += $item['amount'];
         }
 
         $today = date('j');
         $i = ( $today < 5 or $today >= 19 )
             ? 1
-            : 0; 
-        $parts['left'] = $this->data['starting']/2 - $parts[$i];
+            : 0;
 
-        return $parts;
+        $summary['expenses'] = $summary[$i];
+        $summary['left'] = $this->data['starting']/2 - $summary[$i];
+
+        return $summary;
     }
     
     

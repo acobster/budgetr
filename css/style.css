@@ -64,6 +64,9 @@ aside {
 	}
 
 	.list tr:nth-child(2n+1) td { background: #EEE; }
+
+	#summary .list tr:nth-child(4) td { padding-top: 1em; }
+	#summary .list .remaining td { background-color: #55D; }
 	
 #budget { width: 80%; }
 
