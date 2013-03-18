@@ -180,11 +180,11 @@
         </tr>
         <tr>
             <td>Expenses:</td>
-            <td>$<?= $this->formatAmt( $summary['expenses'] ) ?></td>
+            <td class="amount">$<?= $this->formatAmt( $summary['expenses'] ) ?></td>
         </tr>
         <tr class="remaining">
             <td>Remaining:</td>
-            <td>$<?= $this->formatAmt( $summary['left'] ) ?></td>
+            <td class="amount">$<?= $this->formatAmt( $summary['left'] ) ?></td>
         </tr>
 
         </tbody>
