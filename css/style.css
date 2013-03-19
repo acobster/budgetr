@@ -26,7 +26,7 @@ table {
 
 #container {
     width: 100%;
-    min-width: 700px;
+    min-width: 1100px;
 }
 
 .message {
@@ -52,17 +52,17 @@ table {
 aside {
     position: fixed;
     margin: 0 1em;
-    width: 18%;
+    width: 210px;
     left: 80%;
     top: 0;
 }
 	aside div {
 		margin: 2em 0;
 	}
-	aside .amount { width: 50%; }
-	aside .remaining { padding: 0.2em; }
+	aside .remaining {
+		padding: 0.2em;
+	}
 
-	.list { width: 100%; }
 	.list tr:nth-child(2n+1) td { background: #EEE; }
 
 	#summary .list tr:nth-child(4) td { padding-top: 1em; }
@@ -73,15 +73,12 @@ aside {
     #budget td:last-child { width: 3%; }
 	#budget td.itemName { width: 20%; }
 
-	#budget td input {
-		width: 95%;
-		min-width: 15px;
-	}
+	#budget td input { width: 90%; }
 
 	.category { width: 15%; }
 	.month, .day { width: 5%; }
 	.amount {
-		width: 6em;
+		width: 12%;
 		text-align: right;
 	}
 	#budget td.amount input { width: 5em; }
@@ -97,10 +94,10 @@ aside {
 	color: #888;
 }
 
-@media screen and (max-width:900px) {
+@media screen and (max-width:1150px) {
 
-	#budget { width: 100%; }
-
+    #container { width: 1100px; }
+	
 	aside {
 		position: relative;
 		float; none;
