@@ -8,6 +8,10 @@ class Budget extends Model {
     protected $items;
     
     protected $DB;
+
+    protected static $validation = array(
+        'total' => '/^\d+(\.\d\d)?$/',
+    );
     
     public function __construct( $id = 1 ) {
             
@@ -62,7 +66,14 @@ class Budget extends Model {
     }
     
     public function save( $data ) {
-        foreach( $data as $id => $row ) {
+
+        if( ! empty( $data['total'] ) ) {
+            $this->saveTotal( $data['total'] );
+        } else {
+            throw new RuntimeException( 'No total specified!' );
+        }
+
+        foreach( $data['item'] as $id => $row ) {
             if( $id === 'new' ) {
                 foreach( $row as $new ) {
                     $new['budget'] = $this->id;
@@ -73,10 +84,35 @@ class Budget extends Model {
                 Item::save( $id, $row );
             }
         }
+
+        if( ! empty( $data['remove'] ) ) {
+            $this->removeItems( $data['remove'] );
+        }
     }
     
     public function removeItems( $ids ) {
         Item::remove( $ids );
+    }
+
+    public function saveTotal( $total ) {
+
+        $total = self::filterAmount( $total );
+
+        self::validate( array( 'total' => $total ) );
+
+        $sql = "UPDATE budget SET total = $total";
+        
+        $result = $this->DB->run( $sql );
+    }
+    
+    public static function filterAmount( $amt ) {
+
+        $amt = str_replace( ',', '', $amt );
+
+        if( ! preg_match( '/\.\d\d$/', $amt ) ) {
+            $amt .= '.00';
+        }
+        return floatval( $amt ) * 100;
     }
 }
 

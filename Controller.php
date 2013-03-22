@@ -48,19 +48,10 @@ class Controller {
         
         if( isset( $_POST['action'] ) && $_POST['action'] == 'save' ) {
             try {
-                $this->budget->save( $_POST['item'] );
+                $this->budget->save( $_POST );
                 $this->message( 'Saved successfully' );
             } catch( RuntimeException $e ) {
                 $this->error( $e->getMessage() );
-            }
-        
-            if( $_POST['remove'] ) {
-                try {
-                    $this->budget->removeItems( $_POST['remove'] );
-                    $this->message( 'Saved successfully' );
-                } catch( RuntimeException $e ) {
-                    $this->error( $e->getMessage() );
-                }
             }
         }
         

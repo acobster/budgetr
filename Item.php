@@ -24,7 +24,7 @@ class Item extends Model {
         
         self::validate( $row );
         
-        $amount = self::filterAmount( $row['amount'] );
+        $amount = Budget::filterAmount( $row['amount'] );
         
         $sql = "UPDATE items SET name = '{$row['name']}',"
             . " description = '{$row['description']}',"
@@ -42,7 +42,7 @@ class Item extends Model {
         
         self::validate( $row );
 
-        $amount = self::filterAmount( $row['amount'] );
+        $amount = Budget::filterAmount( $row['amount'] );
 
         $sql = "INSERT INTO items SET name = '{$row['name']}',"
             . " description = '{$row['description']}',"
@@ -69,12 +69,5 @@ class Item extends Model {
         $sql = "DELETE FROM items WHERE id IN( $ids )";
 
         DB::singleton()->run( $sql );
-    }
-    
-    protected static function filterAmount( $amt ) {
-        if( substr( $amt, -3 ) ) {
-            $amt .= '.00';
-        }
-        return floatval( $amt ) * 100;
     }
 }
