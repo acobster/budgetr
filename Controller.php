@@ -105,6 +105,8 @@ class Controller {
         $this->data['remaining'] =
             $this->data['starting'] - $this->data['total'];
 
+        $this->data['tfoot'] = $this->parseTemplate( 'tfoot', true );
+
         return $this->parseTemplate( 'monthly', true );
     }
 
@@ -119,6 +121,8 @@ class Controller {
         $this->data['total'] = $this->calculateTotal( $items );
         $this->data['remaining'] =
             $this->data['starting'] - $this->data['total'];
+
+        $this->data['tfoot'] = $this->parseTemplate( 'tfoot', true );
 
         return $this->parseTemplate( 'annual', true );
     }
