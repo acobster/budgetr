@@ -1,0 +1,7 @@
+order deny,allow
+deny from all
+allow from 127.0.0.1
+allow from 63.246.22.222 # bitbucket
+allow from 131.191.82.149 # iMac
+allow from 207.66.136.56 # WFH
+allow from 207.66.231.131 # work iMac

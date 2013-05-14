@@ -16,10 +16,10 @@ class DB {
     protected function __construct() {
         $this->connection = mysql_connect( 
         	'localhost', 
-        	'fangchia_budgetr', 
+        	'budget', 
         	'uL2YcVJPseU5XBBC');
         
-        mysql_select_db('fangchia_budgetr');
+        mysql_select_db('budgetr');
     }
     
     function run( $sql ) {
