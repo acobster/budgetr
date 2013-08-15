@@ -14,32 +14,25 @@ class DB {
     }
     
     protected function __construct() {
-        $this->connection = mysql_connect( 
-        	'localhost', 
-        	'budget', 
-        	'uL2YcVJPseU5XBBC');
-        
-        mysql_select_db('budgetr');
+
+        $this->connection = new PDO(
+            'mysql:dbname=budgetr;host=localhost',
+            'budget',
+            'uL2YcVJPseU5XBBC');
     }
     
     function run( $sql ) {
         
-        $result = mysql_query( $sql );
-
-        $rows = array();
+        $result = $this->connection->query( $sql );
 
         if($result === false) {
-            die('dead: ' . mysql_error() );
-        }
-        if($result === true ) {
-            return true;
+            $info = $this->connection->errorInfo();
+            throw new RuntimeException( $info[2] );
         }
 
-        while( $row = mysql_fetch_assoc($result) ) {
-            $rows[] = $row;
-        }
-        
-        return $rows;
+        $result = $result->fetchAll();
+//echo '<pre>'.var_export($result,true).'</pre>';
+        return $result;
     }
     
     function runSingle( $sql ) {
