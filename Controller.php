@@ -1,26 +1,26 @@
 <?php
 
 class Controller {
-    
+
     private $view;
     private $errors;
-    
+
     private $data;
-    
+
     private $DEBUG = true;
-    
+
     function Controller( $view ) {
         $this->view = $view;
         $this->error = false;
         $this->data = array();
-        
+
         if( $this->DEBUG ) {
             $this->data['debug'] = array();
         }
     }
-    
+
     function execute() {
-        
+
         if( isset( $_GET['id'] ) ) {
             $id = $_GET['id'];
             if( ! filter_var( $id, FILTER_VALIDATE_INT ) ) {
@@ -29,23 +29,23 @@ class Controller {
         } else {
             $id = 1;
         }
-        
+
         $this->budget = new Budget( $id );
-        
+
         switch($this->view) {
             case 'categories' :
                 $this->displayCategories();
                 break;
-                
+
             case 'budget' :
             default :
                 $this->displayBudget();
                 break;
         }
     }
-    
+
     protected function displayBudget() {
-        
+
         if( isset( $_POST['action'] ) && $_POST['action'] == 'save' ) {
             try {
                 $this->budget->save( $_POST );
@@ -54,7 +54,7 @@ class Controller {
                 $this->error( $e->getMessage() );
             }
         }
-        
+
         if( empty( $this->data['message'] ) ) {
             $this->data['message'] = '';
         }
@@ -117,49 +117,52 @@ class Controller {
 
         return $this->parseTemplate( 'annual', true );
     }
-    
+
     protected function displayCategories() {
-        
+
         if( isset( $_POST['action'] ) && $_POST['action'] == 'save' ) {
             try {
-                
+
                 foreach( $_POST['categories'] as $id => $cat ) {
-                    
+
                     if( $id == 'new' ) {
                         foreach( $cat as $new ) {
                             Category::create( $new, $this->budget->id );
                         }
-                    
+
                     } else {
                         Category::save( $id, $cat );
                         $this->data['message'] = 'Saved successfully';
                     }
 
                 }
-                
+
                 if( $_POST['remove'] ) {
                     Category::remove( $_POST['remove'] );
                     $this->data['message'] = "Saved successfully";
                 }
-                
+
             } catch( RuntimeException $e ) {
                 $this->data['message'] = $e->getMessage();
             }
         }
-        
+
         $this->data['categories'] = Category::fetch();
         $this->parseTemplate( 'categories' );
     }
-    
+
     private function categorize( array $items ) {
-        
+
+        $cats = Category::fetch();
+
         $categorized = array();
         $total = 0;
-        
+
+        // categorize existing items
         foreach( $items as & $item ) {
-            
+
             $cat = $item['category'];
-            
+
             if( ! array_key_exists($cat, $categorized) ) {
                 $categorized[$cat] = array(
                 	'items'         => array(),
@@ -169,13 +172,29 @@ class Controller {
                     'description'	=> $item['catdesc'],
                 );
             }
-            
+
             $categorized[$cat]['items'][] = $item;
         }
-        
+
+        // add categories without any items
+        foreach( $cats as $cat ) {
+
+            $name = $cat['name'];
+
+            if( ! array_key_exists($name, $categorized) ) {
+                $categorized[$cat['name']] = array(
+                    'items'         => array(),
+                    'total'         => 0,
+                    'catid'         => $cat['id'],
+                    'name'          => $name,
+                    'description'   => $cat['description'],
+                );
+            }
+        }
+
         return $this->calculateSubtotals( $categorized );
     }
-    
+
     private function calculateTotal( array $items ) {
         $total = 0;
         foreach( $items as $item ) {
@@ -183,7 +202,7 @@ class Controller {
         }
         return $total;
     }
-    
+
     private function calculateSubtotals( array $categories ) {
         foreach( $categories as & $cat ) {
             $total = 0;
@@ -197,7 +216,7 @@ class Controller {
 
     private function summarize( array $items ) {
 
-        $summary = array( 0 => 0, 1 => 0 );        
+        $summary = array( 0 => 0, 1 => 0 );
         $today = date('j');
 
         // The current pay period
@@ -225,11 +244,11 @@ class Controller {
 
         return $summary;
     }
-    
-    
-    
+
+
+
     /***** View Methods *****/
-    
+
     private function debug( $message = '' ) {
         if( $this->DEBUG ) {
             $this->data['debug'][] = $message;
@@ -239,31 +258,31 @@ class Controller {
     private function dump( $obj ) {
         $this->debug( '<pre>' . var_export( $obj, true ) . '</pre>' );
     }
-    
+
     private function error( $message = '' ) {
         $this->error = true;
         $this->message( $message );
     }
-    
+
     private function message( $message = '' ) {
         $this->data['message'] = $message;
     }
-    
+
     private function parseTemplate( $template, $return = false ) {
 
         foreach( $this->data as $k => $v ) {
             $$k = $v;
         }
-        
+
         if( $return ) {
             ob_start();
-            require 'templates/' . $template . '.php';   
+            require 'templates/' . $template . '.php';
             return ob_get_clean();
         } else {
-            require 'templates/' . $template . '.php';   
+            require 'templates/' . $template . '.php';
         }
     }
-    
+
     protected function formatAmt( $amt ) {
         return number_format( $amt/100, 2 );
     }
@@ -280,7 +299,7 @@ class Controller {
             } else {
                 $selected = '';
             }
-            
+
             $select .= <<<_HTML_
                 <option value="{$cat['catid']}" $selected>
                     $name
@@ -305,7 +324,7 @@ _HTML_;
             } else {
                 $selected = '';
             }
-            
+
             $select .= <<<_HTML_
                 <option value="{$cat['day']}" $selected>
                     $day
