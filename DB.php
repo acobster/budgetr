@@ -1,5 +1,7 @@
 <?php
 
+require 'config.inc';
+
 class DB {
 
     private static $singleton;
@@ -16,9 +18,9 @@ class DB {
     protected function __construct() {
 
         $this->connection = new PDO(
-            'mysql:dbname=fangchia_budgetr;host=localhost',
-            'fangchia_budgetr',
-            'uL2YcVJPseU5XBBC');
+            BUDGETR_DB_DSN,
+            BUDGETR_DB_USER,
+            BUDGETR_DB_PASS);
     }
 
     function run( $sql ) {
