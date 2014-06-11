@@ -29,7 +29,7 @@
 
     <?php if( empty( $items ) ) : ?>
     <tr class="variation">
-        <td class="itemName">            
+        <td class="itemName">
             <input type="text" class="nameInp sortField"
             name="item[new][0][name]"
             value="" />
@@ -57,11 +57,11 @@
         </td>
     </tr>
     <?php else : ?>
-    
+
     <?php foreach( $items as $item ) : ?>
     <?php $id = $item['id']; ?>
     <tr class="variation">
-        <td class="itemName">            
+        <td class="itemName">
             <input type="text" class="nameInp sortField"
             name="item[<?= $id ?>][name]"
             value="<?= $item['name'] ?>" />
@@ -90,7 +90,7 @@
         </td>
         <td class="removeVar" title="Remove this budget item">
             <img src="images/remove.png" />
-            
+
             <input type="hidden" name="itemid[]"
             value="<?= $id ?>" />
         </td>
@@ -139,28 +139,20 @@
     <h2>Summary</h2>
     <table class="list">
         <tbody>
-        
-        <tr><th>Day range</th><th>Total</th></tr>
-    
+
         <tr>
-            <td><?= date('M') ?> 5 - 19</td>
-            <td class="amount"> 
-                    $<?= $this->formatAmt( $summary[0] ) ?>
-            </td>
-        </tr>
-        <tr>
-            <td><?= date('M') ?> 1 - 5, 19 - 28</td>
-            <td class="amount"> 
-                    $<?= $this->formatAmt( $summary[1] ) ?>
+            <td>Past expenses:</td>
+            <td class="amount">
+                    $<?= $this->formatAmt( $summary['past'] ) ?>
             </td>
         </tr>
         <tr>
             <td>Remaining Expenses:</td>
-            <td class="amount">$<?= $this->formatAmt( $summary['expenses'] ) ?></td>
+            <td class="amount">$<?= $this->formatAmt( $summary['future'] ) ?></td>
         </tr>
         <tr class="remaining">
             <td>Spending:</td>
-            <td class="amount">$<?= $this->formatAmt( $summary['left'] ) ?></td>
+            <td class="amount">$<?= $this->formatAmt( $remaining ) ?></td>
         </tr>
 
         </tbody>

@@ -219,28 +219,29 @@ class Controller {
         $summary = array( 0 => 0, 1 => 0 );
         $today = date('j');
 
-        // The current pay period
-        $thisPeriod = ( $today < 5 or $today >= 19 )
-            ? 1
-            : 0;
-
         $summary['expenses'] = 0;
 
         foreach( $items as $item ) {
-            // Sum up expenses for each pay period this month
-            $period = ( $item['day'] < 5 or $item['day'] >= 19 )
-                ? 1
-                : 0;
-            $summary[$period] += $item['amount'];
+            // Past or future expense?
+            $span = ( $item['day'] < $today )
+                ? 'past'
+                : 'future';
 
-            if( $period == $thisPeriod and $item['day'] >= $today )
-            {
-                // Sum up remaining expenses for this period
-                $summary['expenses'] += $item['amount'];
-            }
+            // Sum up expenses in this time span
+            $summary[$span] += $item['amount'];
+
+            // // Sum up expenses for each pay period this month
+            // $period = ( $item['day'] < 5 or $item['day'] >= 19 )
+            //     ? 0
+            //     : 0;
+            // $summary[$period] += $item['amount'];
+
+            // if( $period == $thisPeriod and $item['day'] >= $today )
+            // {
+            //     // Sum up remaining expenses for this period
+            //     $summary['expenses'] += $item['amount'];
+            // }
         }
-
-        $summary['left'] = $this->data['starting']/2 - $summary[$thisPeriod];
 
         return $summary;
     }
