@@ -2,6 +2,12 @@
 
 ob_start();
 
+// Timezone settings to avoid blah blah blah
+$timezoneSetting = ini_get('date.timezone');
+if( empty($timezoneSetting) ) {
+  date_default_timezone_set('UTC');
+}
+
 $income = 1000;
 
 $view = isset( $_REQUEST['view'] )
