@@ -18,7 +18,7 @@ table {
 		text-align: center;
 		cursor: pointer;
 	}
-	
+
 	td {
 		margin: 0;
 		padding: 0.3em 1em;
@@ -67,7 +67,7 @@ aside {
 
 	#summary .list tr:nth-child(4) td { padding-top: 1em; }
 	#summary .list .remaining td { background-color: #55D; }
-	
+
 #budget { width: 80%; }
 
     #budget td:last-child { width: 3%; }
@@ -90,6 +90,8 @@ aside {
 	    color: #FFF;
 	}
 
+	.past { background-color: #EEE; }
+
 .instruct {
 	color: #888;
 }
@@ -97,7 +99,7 @@ aside {
 @media screen and (max-width:1150px) {
 
     #container { width: 1100px; }
-	
+
 	aside {
 		position: relative;
 		float; none;

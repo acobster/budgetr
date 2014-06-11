@@ -60,7 +60,7 @@
 
     <?php foreach( $items as $item ) : ?>
     <?php $id = $item['id']; ?>
-    <tr class="variation">
+    <tr class="variation <?= $this->pastOrFuture($item) ?>">
         <td class="itemName">
             <input type="text" class="nameInp sortField"
             name="item[<?= $id ?>][name]"

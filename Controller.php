@@ -288,6 +288,13 @@ class Controller {
         return number_format( $amt/100, 2 );
     }
 
+    protected function pastOrFuture( $item ) {
+        $today = date('j');
+        return ( $item['day'] < $today )
+            ? 'past'
+            : 'future';
+    }
+
     private function catDropdownList( $cats, $item ) {
 
         $select = "<select class=\"sortField\"
