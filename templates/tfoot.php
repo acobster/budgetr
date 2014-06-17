@@ -21,7 +21,7 @@
         <td></td>
     </tr>
     <tr class="remaining" title="Budget total">
-        <td colspan="4">Remaining:</td>
+        <td colspan="4">Spending:</td>
         <td class="amount">$<?= $this->formatAmt( $remaining ) ?></td>
         <td></td>
     </tr>
