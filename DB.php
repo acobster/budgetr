@@ -1,7 +1,5 @@
 <?php
 
-require 'config.inc';
-
 class DB {
 
     private static $singleton;

@@ -1,5 +1,7 @@
 <?php
 
+require 'config.php';
+
 ob_start();
 
 // Timezone settings to avoid blah blah blah
