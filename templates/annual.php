@@ -23,30 +23,30 @@
 
     <?php if( empty( $items ) ) : ?>
     <tr class="variation">
-        <td class="itemName">            
+        <td class="itemName" data-label="Name">
             <input type="text" class="nameInp sortField"
             name="item[new][0][name]"
             value="" />
         </td>
-        <td class="description">
+        <td class="description" data-label="Description">
             <input type="text" class="description sortField"
             name="item[new][0][description]"
             value="" />
         </td>
-        <td class="category">
+        <td class="category" data-label="Category">
             <?= $this->catDropdownList( $categories, $item ) ?>
         </td>
-        <td class="month">
+        <td class="month" data-label="Month">
             <input type="text" class="sortField"
             name="item[new][0][day]"
             value="" />
         </td>
-        <td class="day">
+        <td class="day" data-label="Day">
             <input type="text" class="sortField"
             name="item[new][0][month]"
             value="" />
         </td>
-        <td class="amount">
+        <td class="amount" data-label="Amount">
             $ <input type="text" name="item[new][0][amount]" value="" />
         </td>
         <td class="removeVar" title="Remove this budget item">
@@ -60,30 +60,30 @@
     <?php foreach( $items as $item ) : ?>
     <?php $id = $item['id']; ?>
     <tr class="variation">
-        <td class="itemName">            
+        <td class="itemName" data-label="Name">            
             <input type="text" class="nameInp sortField"
             name="item[<?= $id ?>][name]"
             value="<?= $item['name'] ?>" />
         </td>
-        <td class="description">
+        <td class="description" data-label="Description">
             <input type="text" class="description sortField"
             name="item[<?= $id ?>][description]"
             value="<?= $item['description'] ?>" />
         </td>
-        <td class="category">
+        <td class="category" data-label="Category">
             <?= $this->catDropdownList( $categories, $item ) ?>
         </td>
-        <td class="month">
+        <td class="month" data-label="Month">
             <input type="text" class="sortField"
             name="item[<?= $id ?>][month]"
             value="<?= $item['month'] ?>" />
         </td>
-        <td class="day">
+        <td class="day" data-label="Day">
             <input type="text" class="sortField"
             name="item[<?= $id ?>][day]"
             value="<?= $item['day'] ?>" />
         </td>
-        <td class="amount">
+        <td class="amount" data-label="Amount">
             $ <input type="text" class="sortField"
             name="item[<?= $id ?>][amount]"
             value="<?= $this->formatAmt( $item['amount'] ) ?>" />

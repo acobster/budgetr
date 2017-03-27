@@ -26,8 +26,10 @@ table {
 
 #container {
     width: 100%;
-    min-width: 1100px;
 }
+
+  #budget td.amount input { width: 5em; }
+  .month, .day { width: 5%; }
 
 .message {
   color: #080;
@@ -49,12 +51,15 @@ table {
   background-color: #79C;
 }
 
+
 aside {
-    position: fixed;
-    margin: 0 1em;
-    width: 210px;
-    left: 80%;
-    top: 0;
+  position: relative;
+  float; none;
+  left: 0;
+  width: 100%;
+  margin-top: 2em;
+  padding-top: 1em;
+  border-top: 2px dotted #EEE;
 }
   aside div {
     margin: 2em 0;
@@ -67,21 +72,6 @@ aside {
 
   #summary .list tr:nth-child(4) td { padding-top: 1em; }
   #summary .list .remaining td { background-color: #55D; }
-
-  #budget { width: 80%; }
-
-  #budget td:last-child { width: 3%; }
-  #budget td.itemName { width: 20%; }
-
-  #budget td input { width: 90%; }
-
-  .category { width: 15%; }
-  .month, .day { width: 5%; }
-  .amount {
-    width: 12%;
-    text-align: right;
-  }
-  #budget td.amount input { width: 5em; }
 
   .budgetTotal {  background-color: #EEE; }
 
@@ -96,13 +86,77 @@ aside {
   color: #888;
 }
 
-@media screen and (max-width:1150px) {
-
-  #container { width: 1100px; }
+@media screen and (min-width:1150px) {
+  #budget { width: 80%; }
+    #budget td.itemName { width: 20%; }
+    #budget td:last-child { width: 3%; }
+    #budget td input { width: 90%; }
+  
+  .category { width: 15%; }
+  #container { min-width: 1100px; }
 
   aside {
-    position: relative;
-    float; none;
-    left: 0;
+      position: fixed;
+      margin: 0 1em;
+      width: 210px;
+      left: 80%;
+      top: 0;
+      border-top: none;
   }
+
+  .amount {
+    width: 12%;
+    text-align: right;
+  }
+}
+
+@media screen and (max-width: 1149px) {
+  #budget,
+  #budget thead,
+  #budget tbody,
+  #budget tfoot,
+  #budget th,
+  #budget td,
+  #budget tr {
+    display: block;
+  }
+
+  #budget thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  #budget tr {
+    position: relative;
+    border-top: 2px dotted #55d;
+  }
+
+  #budget td {
+    max-width: 64%;
+    /* behave like a grid row */
+    border: none;
+    position: relative;
+    padding: 1em 1em 1em 30%;
+  }
+    #budget tfoot td { padding-left: 1em; }
+
+  #budget input {
+    width: 100%;
+  }
+
+  #budget td:before {
+    position: absolute;
+    left: 2em;
+    content: attr(data-label);
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  #budget td.removeVar {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+  }
+    #budget td.removeVar:before { display: none; }
 }

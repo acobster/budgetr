@@ -15,7 +15,7 @@
 
 <input type="hidden" name="theMonth" value="<?= $theDate->format('n') ?>" />
 
-<table id="budget" class="variations">
+<table id="budget" class="variations budget">
     <thead>
         <tr>
             <th class="budgetHeader">Name</th>
@@ -61,20 +61,20 @@
     <?php foreach( $items as $item ) : ?>
     <?php $id = $item['id']; ?>
     <tr class="variation <?= $this->pastOrFuture($item) ?>">
-        <td class="itemName">
+        <td class="itemName" data-label="Name">
             <input type="text" class="nameInp sortField"
             name="item[<?= $id ?>][name]"
             value="<?= $item['name'] ?>" />
         </td>
-        <td class="description">
+        <td class="description" data-label="Description">
             <input type="text" class="description sortField"
             name="item[<?= $id ?>][description]"
             value="<?= $item['description'] ?>" />
         </td>
-        <td class="category">
+        <td class="category" data-label="Category">
             <?= $this->catDropdownList( $categories, $item ) ?>
         </td>
-        <td class="day">
+        <td class="day" data-label="Day">
             <input class="itemMonth"
             type="hidden" name="item[<?= $id ?>][month]"
             value="<?= $item['month'] ?>" />
@@ -83,7 +83,7 @@
             name="item[<?= $id ?>][day]"
             value="<?= $item['day'] ?>" />
         </td>
-        <td class="amount">
+        <td class="amount" data-label="Amount">
             $ <input type="text" class="sortField"
             name="item[<?= $id ?>][amount]"
             value="<?= $this->formatAmt( $item['amount'] ) ?>" />
