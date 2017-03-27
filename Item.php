@@ -19,17 +19,16 @@ class Item extends Model {
         'catid' => '/^\d+$/',
         'budget' => '/^\d+$/',
     );
-    
+
     public static function save( $id, $row ) {
         
+        $row['amount'] = Budget::filterAmount( $row['amount'] );
         self::validate( $row );
-        
-        $amount = Budget::filterAmount( $row['amount'] );
-        
+
         $sql = "UPDATE items SET name = '{$row['name']}',"
             . " description = '{$row['description']}',"
             . " budget = {$row['budget']},"
-            . " amount = $amount,"
+            . " amount = {$row['amount']},"
             . " category = {$row['catid']},"
             . " month = {$row['month']},"
             . " day = {$row['day']}"
