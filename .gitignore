@@ -1,5 +1,5 @@
 .htaccess
 budgetr.sql
-config.inc
+config.php
 deploy/
 error_log
