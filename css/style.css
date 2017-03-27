@@ -3,26 +3,26 @@
  */
 
 body {
-	font-family: helvetica;
-	font-size: 0.8em;
+  font-family: helvetica;
+  font-size: 0.8em;
 }
 
 table {
-	border-collapse: separate;
-	border-spacing: 0 0.2em;
+  border-collapse: separate;
+  border-spacing: 0 0.2em;
 }
 
-	tr { text-align: left; }
+  tr { text-align: left; }
 
-	th {
-		text-align: center;
-		cursor: pointer;
-	}
+  th {
+    text-align: center;
+    cursor: pointer;
+  }
 
-	td {
-		margin: 0;
-		padding: 0.3em 1em;
-	}
+  td {
+    margin: 0;
+    padding: 0.3em 1em;
+  }
 
 #container {
     width: 100%;
@@ -30,8 +30,8 @@ table {
 }
 
 .message {
-	color: #080;
-	font-weight: bold;
+  color: #080;
+  font-weight: bold;
 }
 .error { color: #C00; }
 
@@ -40,13 +40,13 @@ table {
 .addVar td, .newItem.first td { padding-top: 1em; }
 
 .catHeader {
-	color: #FFF;
-	background-color: #55D;
+  color: #FFF;
+  background-color: #55D;
 }
 
 .grandTotal {
-	color: #FFF;
-	background-color: #79C;
+  color: #FFF;
+  background-color: #79C;
 }
 
 aside {
@@ -56,53 +56,53 @@ aside {
     left: 80%;
     top: 0;
 }
-	aside div {
-		margin: 2em 0;
-	}
-	aside .remaining {
-		padding: 0.2em;
-	}
+  aside div {
+    margin: 2em 0;
+  }
+  aside .remaining {
+    padding: 0.2em;
+  }
 
-	.list tr:nth-child(2n+1) td { background: #EEE; }
+  .list tr:nth-child(2n+1) td { background: #EEE; }
 
-	#summary .list tr:nth-child(4) td { padding-top: 1em; }
-	#summary .list .remaining td { background-color: #55D; }
+  #summary .list tr:nth-child(4) td { padding-top: 1em; }
+  #summary .list .remaining td { background-color: #55D; }
 
-#budget { width: 80%; }
+  #budget { width: 80%; }
 
-    #budget td:last-child { width: 3%; }
-	#budget td.itemName { width: 20%; }
+  #budget td:last-child { width: 3%; }
+  #budget td.itemName { width: 20%; }
 
-	#budget td input { width: 90%; }
+  #budget td input { width: 90%; }
 
-	.category { width: 15%; }
-	.month, .day { width: 5%; }
-	.amount {
-		width: 12%;
-		text-align: right;
-	}
-	#budget td.amount input { width: 5em; }
+  .category { width: 15%; }
+  .month, .day { width: 5%; }
+  .amount {
+    width: 12%;
+    text-align: right;
+  }
+  #budget td.amount input { width: 5em; }
 
-	.budgetTotal { 	background-color: #EEE; }
+  .budgetTotal {  background-color: #EEE; }
 
-	.remaining {
-	    background-color: #55D;
-	    color: #FFF;
-	}
+  .remaining {
+      background-color: #55D;
+      color: #FFF;
+  }
 
-	.past { background-color: #EEE; }
+  .past { background-color: #EEE; }
 
 .instruct {
-	color: #888;
+  color: #888;
 }
 
 @media screen and (max-width:1150px) {
 
-    #container { width: 1100px; }
+  #container { width: 1100px; }
 
-	aside {
-		position: relative;
-		float; none;
-		left: 0;
-	}
+  aside {
+    position: relative;
+    float; none;
+    left: 0;
+  }
 }
