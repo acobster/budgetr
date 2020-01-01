@@ -1,0 +1,16 @@
+{:lein         true
+ :source-paths ["src"]
+
+ :dependencies [[binaryage/devtools "0.9.7"]
+                [cider/cider-nrepl "0.21.0"]]
+
+ :nrepl {:init-ns budgetr.state}
+
+ :builds       {:app {:target     :browser
+                      :output-dir "resources/public/js"
+                      :asset-path "/js"
+                      :modules    {:app {:entries [budgetr.core]}}
+                      :devtools   {:after-load budgetr.core/mount-root}
+                      :dev {:compiler-options {:devcards true}}}}
+ :dev-http     {3000 {:root    "resources/public"
+                      :handler budgetr.handler/app}}}
