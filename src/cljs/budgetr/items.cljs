@@ -33,10 +33,16 @@
    [:div.i-handle {:on-click #(s/emit! :select-item idx)}]]))
 
 
+(defn help-text [txt]
+  [:span.help txt])
+
+
 (defn summary [items]
   (let [total (sum-amounts @s/items)
         subtotal (sum-amounts (filter s/selected? @s/items))]
-      (str "Expenses: $" subtotal " / $" total " total")))
+      (if @s/selecting?
+        [help-text "Click on another item to complete your selection"]
+        [:span.emphasized "Expenses: $" subtotal " / $" total " total"])))
 
 
 (defn items-list []

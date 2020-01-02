@@ -1,5 +1,6 @@
 :root {
-  --footer-height: 2em;
+  --footer-height: 2.5em;
+  --footer-padding: 0.8em 1em 0;
 }
 
 main {
@@ -49,7 +50,7 @@ footer {
   border-top: 2px dashed grey;
   width: 100%;
   height: var(--footer-height);
-  padding-top: 0.3em;
+  padding: var(--footer-padding);
   text-align: right;
 }
 
@@ -84,4 +85,12 @@ a:hover {
 }
 .i-amount input {
   width: 8ch;
+}
+
+.help {
+  color: grey;
+  font-style: italic;
+}
+.emphasized {
+  font-weight: bold;
 }

@@ -1,6 +1,18 @@
 (ns budgetr.state
   (:require
+    [clojure.spec.alpha :as spec]
     [reagent.core :as r]))
+
+
+(spec/def ::name string?)
+(spec/def ::description string?)
+(spec/def ::day int?)
+(spec/def ::amount int?)
+
+(spec/def ::item (spec/keys :req-un [::name ::description ::day ::amount]))
+(spec/def ::items (spec/coll-of ::item :kind vector?))
+
+(spec/def ::app-state (spec/keys :req-un [::items]))
 
 
 (defonce app-state
@@ -15,22 +27,22 @@
                     :day 5
                     :amount 150}
                    {:uuid "pfovmsjoerjjw"
-                    :name "And Another"
+                    :name "Reprehenderit elit"
                     :description "Lorem ipsum dolor sit amet"
                     :day 7
                     :amount 80}
                    {:uuid "nbnmsdhwgweg"
-                    :name "And Another"
+                    :name "impedit irure"
                     :description "Lorem ipsum dolor sit amet"
                     :day 11
                     :amount 250}
                    {:uuid "erysbsdfvsfgha"
-                    :name "And Another"
+                    :name "in aliquip quo"
                     :description "Lorem ipsum dolor sit amet"
                     :day 16
                     :amount 500}
                    {:uuid "sdfgrmrtnerbebr"
-                    :name "And Another"
+                    :name "similique optio consequat"
                     :description "Lorem ipsum dolor sit amet"
                     :day 21
                     :amount 500}
@@ -44,6 +56,13 @@
 
 (def items (r/cursor app-state [:items]))
 (def selection (r/cursor app-state [:selection]))
+(def selecting? (r/cursor app-state [:selecting?]))
+
+(comment
+
+  @selecting?
+  
+  )
 
 (defn selected? [item]
   (contains? @selection (:uuid item)))
@@ -85,7 +104,8 @@
   :update-item
   [_ state idx item]
   (-> state
-      (assoc-in [:items idx] item)))
+      (assoc-in [:items idx] item)
+      (update :items #(vec (sort-by (comp int :day) %)))))
 
 
 
