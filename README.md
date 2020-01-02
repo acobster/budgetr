@@ -7,6 +7,7 @@ Dead-simple recurring expenses
 * As a user, I want to select a day range
 * As a user, when I select a day range, I want to see total expenses within that range
 * As a user, when I change an item day, I want to see the change reflected in the items' sort order
+* As a user, I want to use Budgetr offline
 
 ## Development
 
