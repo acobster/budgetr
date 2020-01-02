@@ -48,7 +48,8 @@
 (defn items-list []
   (fn []
     [:div.items-list
-     [:h1 "Budgetr"]
+     [:header
+      [:h1 "Budgetr"]]
      [:ul (map-indexed (fn [idx i]
                          ^{:key idx}
                          [:li [item i idx]])
