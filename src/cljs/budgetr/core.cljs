@@ -2,6 +2,7 @@
   (:require
     [budgetr.items :as items]
     [budgetr.routes :as routes]
+    [budgetr.state :as s]
     [reagent.core :as reagent :refer [atom]]
     [reagent.session :as session]
     [reitit.frontend :as reitit]
@@ -42,10 +43,15 @@
 ;; -------------------------
 ;; Initialize app
 
+(defn init-app-state! []
+  (s/emit! :init-app-state (or (s/fetch-from-local-storage)
+                               s/default-app-state)))
+
 (defn mount-root []
   (reagent/render [current-page] (.getElementById js/document "app")))
 
 (defn init! []
+  (init-app-state!)
   (clerk/initialize!)
   (accountant/configure-navigation!
    {:nav-handler
@@ -56,8 +62,7 @@
         (reagent/after-render clerk/after-render!)
         (session/put! :route {:current-page (page-for current-page)
                               :route-params route-params})
-        (clerk/navigate-page! path)
-        ))
+        (clerk/navigate-page! path)))
     :path-exists?
     (fn [path]
       (boolean (reitit/match-by-path routes/router path)))})
