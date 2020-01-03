@@ -3,6 +3,7 @@
     [budgetr.items :as items]
     [budgetr.routes :as routes]
     [budgetr.state :as s]
+    [budgetr.store :as store]
     [reagent.core :as reagent :refer [atom]]
     [reagent.session :as session]
     [reitit.frontend :as reitit]
@@ -44,7 +45,7 @@
 ;; Initialize app
 
 (defn init-app-state! []
-  (s/emit! :init-app-state (or (s/fetch-from-local-storage)
+  (s/emit! :init-app-state (or (store/fetch-from-local-storage)
                                s/default-app-state)))
 
 (defn mount-root []

@@ -1,7 +1,7 @@
 (ns budgetr.state
   (:require
+   [budgetr.store :as store]
    [clojure.spec.alpha :as spec]
-   [cljs.reader :refer [read-string]]
    [reagent.core :as r]))
 
 
@@ -122,21 +122,8 @@
       (update :items #(vec (sort-by (comp int :day) %)))))
 
 
-(defn persist! [app-state]
-  "Persist app-state in localStorage as EDN"
-  (->> app-state
-       str
-       (js/localStorage.setItem "app-state")))
-
-
-(defn fetch-from-local-storage []
-  (some-> "app-state"
-          js/localStorage.getItem
-          read-string))
-
-
 (defn emit! [action & values]
   (swap! app-state
          (fn [state]
            (apply handle-action action (concat [state] values))))
-  (persist! @app-state))
+  (store/persist! @app-state))
