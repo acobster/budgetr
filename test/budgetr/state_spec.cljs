@@ -42,3 +42,15 @@
           (count new-items))
        ; the new set of items should not contain the deleted item
        (not (contains? (set new-items) deleted-item))))))
+
+(defspec create-item-inserts-new-item-at-specified-index 25
+  (prop/for-all
+   [state (spec/gen ::budgetr.state/app-state)
+    item (spec/gen ::budgetr.state/item)]
+   (let [idx (rand-int (count (:items state)))
+         old-items (:items state)
+         new-state (sut/handle-action :create-item state item idx)
+         new-items (:items new-state)]
+     (and
+      (= (inc (count old-items)) (count new-items))
+      (= item (get new-items idx))))))

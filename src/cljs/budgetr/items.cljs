@@ -21,16 +21,22 @@
    [:span.i-field.i-day
     [:input {:type "number"
              :value (:day i)
+             :min 1
+             :max 31
              :on-change #(let [v (.-target.value %)
                                new-item (conj i {:day v})]
                            (s/emit! :update-item idx new-item))}]]
    [:span.i-field.i-amount
     [:input {:type "number"
              :value (:amount i)
+             :min 1
+             :max 1000000
              :on-change #(let [v (.-target.value %)
                                new-item (conj i {:amount v})]
                            (s/emit! :update-item idx new-item))}]]
    [:div.i-handle {:on-click #(s/emit! :select-item idx)}]
+   [:div.i-action {:on-click #(s/emit! :create-item {} idx)} "➕⬆️"]
+   [:div.i-action {:on-click #(s/emit! :create-item {} (inc idx))} "➕⬇️"]
    [:div.i-action {:on-click #(s/emit! :delete-item idx)} "❌"]]))
 
 

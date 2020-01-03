@@ -67,12 +67,6 @@
 (def selection (r/cursor app-state [:selection]))
 (def selecting? (r/cursor app-state [:selecting?]))
 
-(comment
-
-  @selecting?
-  
-  )
-
 (defn selected? [item]
   (contains? @selection (:id item)))
 (defn starts-selection? [idx]
@@ -130,9 +124,23 @@
     (-> state
         (update :items delete-idx idx))))
 
+(defmethod handle-action
+  :create-item
+  [_ state item idx]
+  (letfn [(insert-at [v item idx]
+            (let [[before after] (split-at idx v)]
+              (vec (concat before [item] after))))]
+    (update state :items insert-at item idx)))
+
 
 (defn emit! [action & values]
   (swap! app-state
          (fn [state]
            (apply handle-action action (concat [state] values))))
   (store/persist! @app-state))
+
+(comment
+  (handle-action :create-item
+                 {:items []}
+                 {:id 123 :name "" :description "" :day 1 :amount 1.00}
+                 0))
