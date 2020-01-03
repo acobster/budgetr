@@ -9,6 +9,7 @@
   },
   "scripts": {
     "watch": "shadow-cljs watch app test",
+    "repl": "shadow-cljs cljs-repl app",
     "release": "shadow-cljs release app"
   }
 }
