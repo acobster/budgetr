@@ -84,7 +84,11 @@ a:hover {
   width: 5ch;
 }
 .i-amount input {
-  width: 8ch;
+  width: 12ch;
+}
+
+.i-action {
+  cursor: pointer;
 }
 
 .help {

@@ -7,11 +7,11 @@
 
 (spec/def ::name string?)
 (spec/def ::description string?)
-(spec/def ::day int?)
-(spec/def ::amount int?)
+(spec/def ::day (spec/int-in 1 31))
+(spec/def ::amount double?)
 
 (spec/def ::item (spec/keys :req-un [::name ::description ::day ::amount]))
-(spec/def ::items (spec/coll-of ::item :kind vector?))
+(spec/def ::items (spec/coll-of ::item :kind vector? :distinct true))
 
 (spec/def ::app-state (spec/keys :req-un [::items]))
 
@@ -120,6 +120,15 @@
   (-> state
       (assoc-in [:items idx] item)
       (update :items #(vec (sort-by (comp int :day) %)))))
+
+(defmethod handle-action
+  :delete-item
+  [_ state idx]
+  (letfn [(delete-idx [v idx]
+                      (vec (concat (subvec v 0 idx)
+                                   (subvec v (min (count v) (inc idx))))))]
+    (-> state
+        (update :items delete-idx idx))))
 
 
 (defn emit! [action & values]

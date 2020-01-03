@@ -30,7 +30,8 @@
              :on-change #(let [v (.-target.value %)
                                new-item (conj i {:amount v})]
                            (s/emit! :update-item idx new-item))}]]
-   [:div.i-handle {:on-click #(s/emit! :select-item idx)}]]))
+   [:div.i-handle {:on-click #(s/emit! :select-item idx)}]
+   [:div.i-action {:on-click #(s/emit! :delete-item idx)} "❌"]]))
 
 
 (defn help-text [txt]

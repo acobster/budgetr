@@ -15,7 +15,7 @@
   (let [days (map (comp int :day) items)]
     (= days (sort days))))
 
-(defspec update-item-sorts-items-by-day 100
+(defspec update-item-sorts-items-by-day 25
   (prop/for-all
     [state (spec/gen ::budgetr.state/app-state)]
     (let [idx (rand-int (count (:items state)))
@@ -24,3 +24,21 @@
     (-> new-state
         :items
         sorted-by-day?))))
+
+(defspec delete-item-removes-the-item 25
+  (prop/for-all
+   [state (spec/gen ::budgetr.state/app-state)]
+   (let [old-items (:items state)
+         idx (rand-int (count old-items))
+         deleted-item (get old-items idx)
+         new-state (sut/handle-action :delete-item state idx)
+         new-items (:items new-state)]
+      (and
+       ; items should always be a vector
+       (vector? new-items)
+       ; there should be exactly one less than (count (:items state)) items left,
+       ; unless there were none to begin with, in which case there should be zero
+       (= (max 0 (dec (count old-items)))
+          (count new-items))
+       ; the new set of items should not contain the deleted item
+       (not (contains? (set new-items) deleted-item))))))
