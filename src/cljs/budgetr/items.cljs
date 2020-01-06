@@ -10,10 +10,8 @@
     (reduce +amount 0 items)))
 
 (defn item [i idx]
-  (let [selected-class (if (s/selected? i) "i--selected")
-        starts-sel-class (if (s/starts-selection? idx) " i--selection-start")
-        classes (str selected-class starts-sel-class)]
-  [:article {:class classes
+  (let [selected-class (if (s/selected? i) "i--selected")]
+  [:article {:class selected-class
              :data-idx idx}
    [:span.i-field.i-name
     [:input {:type "text"
@@ -37,7 +35,7 @@
              :min 1
              :max 1000000
              :on-change #(s/emit! :update-item idx :amount (.-target.value %))}]]
-   [:div.i-handle {:on-click #(s/emit! :select-item idx)}]
+   [:div.i-handle {:on-click #(s/emit! :select-day (:day i))}]
    [:div.i-action {:on-click #(s/emit! :create-item {} idx)} "➕⬆️"]
    [:div.i-action {:on-click #(s/emit! :create-item {} (inc idx))} "➕⬇️"]
    [:div.i-action {:on-click #(s/emit! :delete-item idx)} "❌"]]))
@@ -50,9 +48,7 @@
 (defn summary [items]
   (let [total (sum-amounts @s/items)
         subtotal (sum-amounts (filter s/selected? @s/items))]
-      (if @s/selecting?
-        [help-text "Click on another item to complete your selection"]
-        [:span.emphasized "Expenses: $" subtotal " / $" total " total"])))
+    [:span.emphasized "Expenses: $" subtotal " / $" total " total"]))
 
 
 (defn items-list []

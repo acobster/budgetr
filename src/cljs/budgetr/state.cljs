@@ -21,56 +21,22 @@
             :name "My First Item"
             :description "Edits to this text are saved automatically."
             :day 1
-            :amount 100.00}
-           {:id "asdfqwerty"
-            :name "Item Name"
-            :description "Lorem ipsum dolor sit amet"
-            :day 1
-            :amount 100}
-           {:id "wriogwrgajwji"
-            :name "Another Item"
-            :description "Lorem ipsum dolor sit amet"
-            :day 5
-            :amount 150}
-           {:id "pfovmsjoerjjw"
-            :name "Reprehenderit elit"
-            :description "Lorem ipsum dolor sit amet"
-            :day 7
-            :amount 80}
-           {:id "nbnmsdhwgweg"
-            :name "impedit irure"
-            :description "Lorem ipsum dolor sit amet"
-            :day 11
-            :amount 250}
-           {:id "erysbsdfvsfgha"
-            :name "in aliquip quo"
-            :description "Lorem ipsum dolor sit amet"
-            :day 16
-            :amount 500}
-           {:id "sdfgrmrtnerbebr"
-            :name "similique optio consequat"
-            :description "Lorem ipsum dolor sit amet"
-            :day 21
-            :amount 500}
-           {:id "zqodjslcndjewuj"
-            :name "Last one"
-            :description "Lorem ipsum dolor sit amet"
-            :day 30
-            :amount 150}]
-   :selecting? false
-   :selection #{}})
+            :amount 100.00}]
+   :selected-range [1 31]})
 
 (defonce app-state
   (r/atom default-app-state))
 
 (def items (r/cursor app-state [:items]))
-(def selection (r/cursor app-state [:selection]))
-(def selecting? (r/cursor app-state [:selecting?]))
+(def selected-range (r/cursor app-state [:selected-range]))
 
 (defn selected? [item]
-  (contains? @selection (:id item)))
-(defn starts-selection? [idx]
-  (= idx (:selection-start @app-state)))
+  (let [day (:day item)
+        foo (js/console.log (clj->js @selected-range))
+        [start end] @selected-range]
+    (and
+     (>= day start)
+     (<= day end))))
 
 (defn selected-items []
   (filter selected? @items))
@@ -94,18 +60,15 @@
   new-state)
 
 (defmethod handle-action
-  :select-item
-  [_ state idx]
+  :select-day
+  [_ state day]
   (if (:selecting? state)
-    (let [items (items-between (:items state)
-                              (:selection-start state)
-                              idx)]
       (-> state
-          (assoc :selecting? false)
-          (assoc :selection (set (map :id items)))))
+          (assoc-in [:selected-range 1] day)
+          (assoc :selecting? false))
     (-> state
+        (assoc-in [:selected-range 0] day)
         (assoc :selecting? true)
-        (assoc :selection-start idx)
         (assoc :selection #{}))))
 
 (defmethod handle-action
