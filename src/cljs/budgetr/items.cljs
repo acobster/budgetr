@@ -9,31 +9,34 @@
   (letfn [(+amount [sum item] (+ sum (int (:amount item))))]
     (reduce +amount 0 items)))
 
-
 (defn item [i idx]
   (let [selected-class (if (s/selected? i) "i--selected")
         starts-sel-class (if (s/starts-selection? idx) " i--selection-start")
         classes (str selected-class starts-sel-class)]
   [:article {:class classes
              :data-idx idx}
-   [:span.i-field.i-name (:name i)]
-   [:span.i-field.i-description (:description i)]
+   [:span.i-field.i-name
+    [:input {:type "text"
+             :placeholder "Webcam Porn"
+             :value (:name i)
+             :on-change #(s/emit! :update-item idx :name (.-target.value %))}]]
+   [:span.i-field.i-description
+    [:input {:type "text"
+             :value (:description i)
+             :placeholder "streamate.com"
+             :on-change #(s/emit! :update-item idx :description (.-target.value %))}]]
    [:span.i-field.i-day
     [:input {:type "number"
              :value (:day i)
              :min 1
              :max 31
-             :on-change #(let [v (.-target.value %)
-                               new-item (conj i {:day v})]
-                           (s/emit! :update-item idx new-item))}]]
+             :on-change #(s/emit! :update-item idx :day (.-target.value %))}]]
    [:span.i-field.i-amount
     [:input {:type "number"
              :value (:amount i)
              :min 1
              :max 1000000
-             :on-change #(let [v (.-target.value %)
-                               new-item (conj i {:amount v})]
-                           (s/emit! :update-item idx new-item))}]]
+             :on-change #(s/emit! :update-item idx :amount (.-target.value %))}]]
    [:div.i-handle {:on-click #(s/emit! :select-item idx)}]
    [:div.i-action {:on-click #(s/emit! :create-item {} idx)} "➕⬆️"]
    [:div.i-action {:on-click #(s/emit! :create-item {} (inc idx))} "➕⬇️"]

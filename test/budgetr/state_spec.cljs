@@ -20,10 +20,11 @@
     [state (spec/gen ::budgetr.state/app-state)]
     (let [idx (rand-int (count (:items state)))
           item (gen/generate (spec/gen ::budgetr.state/item))
-          new-state (sut/handle-action :update-item state idx item)]
-    (-> new-state
-        :items
-        sorted-by-day?))))
+          new-state (sut/handle-action :update-item state idx item)
+          new-items (:items new-state)]
+    (and
+     (sorted-by-day? new-items)
+     (vector? new-items)))))
 
 (defspec delete-item-removes-the-item 25
   (prop/for-all

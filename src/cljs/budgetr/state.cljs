@@ -110,9 +110,9 @@
 
 (defmethod handle-action
   :update-item
-  [_ state idx item]
+  [_ state idx k v]
   (-> state
-      (assoc-in [:items idx] item)
+      (assoc-in [:items idx k] v)
       (update :items #(vec (sort-by (comp int :day) %)))))
 
 (defmethod handle-action
