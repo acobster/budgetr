@@ -60,16 +60,17 @@
   new-state)
 
 (defmethod handle-action
-  :select-day
+  :select-min-day
   [_ state day]
-  (if (:selecting? state)
-      (-> state
-          (assoc-in [:selected-range 1] day)
-          (assoc :selecting? false))
-    (-> state
-        (assoc-in [:selected-range 0] day)
-        (assoc :selecting? true)
-        (assoc :selection #{}))))
+  (-> state
+      (assoc-in [:selected-range 0] day)))
+
+(defmethod handle-action
+  :select-max-day
+  [_ state day]
+  (-> state
+      (assoc-in [:selected-range 1] day)))
+
 
 (defmethod handle-action
   :update-item

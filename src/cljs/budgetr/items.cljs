@@ -35,7 +35,6 @@
              :min 1
              :max 1000000
              :on-change #(s/emit! :update-item idx :amount (.-target.value %))}]]
-   [:div.i-handle {:on-click #(s/emit! :select-day (:day i))}]
    [:div.i-action {:on-click #(s/emit! :create-item {} idx)} "➕⬆️"]
    [:div.i-action {:on-click #(s/emit! :create-item {} (inc idx))} "➕⬇️"]
    [:div.i-action {:on-click #(s/emit! :delete-item idx)} "❌"]]))
@@ -47,8 +46,20 @@
 
 (defn summary [items]
   (let [total (sum-amounts @s/items)
-        subtotal (sum-amounts (filter s/selected? @s/items))]
-    [:span.emphasized "Expenses: $" subtotal " / $" total " total"]))
+        subtotal (sum-amounts (filter s/selected? @s/items))
+        [start end] @s/selected-range]
+    [:div
+     [:input {:type "range"
+              :min 1
+              :max 31
+              :value start
+              :on-change #(s/emit! :select-min-day (.-target.value %))}]
+     [:input {:type "range"
+              :value end
+              :min 1
+              :max 31
+              :on-change #(s/emit! :select-max-day (.-target.value %))}]
+     [:span.emphasized "Expenses: $" subtotal " / $" total " total"]]))
 
 
 (defn items-list []
