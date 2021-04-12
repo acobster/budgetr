@@ -111,6 +111,7 @@ aside {
 }
 
 @media screen and (max-width: 1149px) {
+
   #budget,
   #budget thead,
   #budget tbody,
@@ -133,7 +134,7 @@ aside {
   }
 
   #budget td {
-    max-width: 64%;
+    max-width: 60%;
     /* behave like a grid row */
     border: none;
     position: relative;
@@ -155,8 +156,8 @@ aside {
 
   #budget td.removeVar {
     position: absolute;
-    top: 0.5em;
-    right: 0.5em;
+    top: 0;
+    right: 0;
   }
     #budget td.removeVar:before { display: none; }
 }
