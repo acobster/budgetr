@@ -2,6 +2,12 @@
 
 require 'config.php';
 
+spl_autoload_register(function( string $class ) : void {
+  if ( is_readable( "$class.php" ) ) {
+    require "$class.php";
+  }
+});
+
 ob_start();
 
 // Timezone settings to avoid blah blah blah
@@ -21,9 +27,5 @@ $control->execute();
 
 ob_end_flush();
 
-
-function __autoload( $class ) {
-    require $class . '.php';
-}
 
 ?>
