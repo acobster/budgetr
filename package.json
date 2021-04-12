@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "shadow-cljs": "^2.8.37"
+  },
+  "dependencies": {
+    "create-react-class": "^15.6.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "scripts": {
+    "watch": "shadow-cljs watch app test",
+    "repl": "shadow-cljs cljs-repl app",
+    "release": "shadow-cljs release app"
+  }
+}
